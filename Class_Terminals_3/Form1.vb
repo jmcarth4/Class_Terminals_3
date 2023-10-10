@@ -67,46 +67,101 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub QyRecButton_Click(sender As Object, e As EventArgs) Handles QyRecButton.Click
-        QyRecLabel.Text = ""
-        Label1.Text = " "
-    End Sub
 
-    Private Sub QySendButton_Click(sender As Object, e As EventArgs) Handles QySendButton.Click
+
+    Private Sub AnalogReadButton_Click(sender As Object, e As EventArgs) Handles AnalogReadButton.Click
 
         Timer1.Enabled = False                                  'Stop Timer
 
-        Dim dataLen, TXCount As Integer
+        'Dim dataLen, TXCount As Integer
 
-        Dim sendByte As Byte
-        dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
-        sendByte = CByte(51)
-        ' dataOut = sendByte
+        'Dim sendByte As Byte
+        ''dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
+        'dataLen = Len(sendByte)
+        'sendByte = CByte(51)
+        '' dataOut = sendByte
 
+        'If portState = True Then
+        '    If TextBox1.Text IsNot "" Then                         'Test for null characters
+        '        Do Until TXCount = dataLen                          'Do once for each character
+        '            If SerialPort1.BytesToWrite = 0 Then
+        '                'grab Character x using the TXCount as an index pointer
+        '                'dataOut = TextBox1.Text.ElementAt(TXCount)
+        '                dataOut = sendByte
+        '                SerialPort1.Write(dataOut)     'Sends Character x out
+        '                TXCount += 1                   'Increment loop count info
+        '            End If
+        '        Loop
+        '        TransmitCount += dataLen                'Save total bytes send info
+        '        ' OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+
+        '    Else
+        '        Timer1.Enabled = True  'restart timer
+        '        Exit Sub
+
+        '    End If
+
+        'Else
+        '    MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
+        '    'TextBox1.Text = " "
+        'End If
+        'Timer1.Enabled = True
+
+        Dim dataOut As String
+
+        dataOut = 3
         If portState = True Then
-            If TextBox1.Text IsNot "" Then                         'Test for null characters
-                Do Until TXCount = dataLen                          'Do once for each character
-                    If SerialPort1.BytesToWrite = 0 Then
-                        'grab Character x using the TXCount as an index pointer
-                        'dataOut = TextBox1.Text.ElementAt(TXCount)
-                        dataOut = sendByte
-                        SerialPort1.Write(dataOut)     'Sends Character x out
-                        TXCount += 1                   'Increment loop count info
-                    End If
-                Loop
-                TransmitCount += dataLen                'Save total bytes send info
-                OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+            If portState = True Then
+                SerialPort1.Write(dataOut, 0, 1)
+                'ListBox1.Items.Add(dataOut)
             Else
-                Timer1.Enabled = True  'restart timer
-                Exit Sub
+                MsgBox("Please configure and open serial port to procede")
 
             End If
-
-        Else
-            MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
-            'TextBox1.Text = " "
         End If
+
+
+
+        'Timer1.Enabled = False
+
+        ''Dim dataOut1 As String
+        ''Dim dataOut2 As String
+        ''Dim dataOut3 As String
+        ''Dim dataOut4 As String
+        'Dim dataIn1, dataIn2, dataIn3, dataIn4 As Integer
+
+
+
+        'If portState = True Then
+        '    If dataOut IsNot "" Then
+        '        SerialPort1.Write(dataOut, 0, 1)
+        '        OutTermListBox.Items.Add(dataOut)
+
+        '    Else
+        '        Timer1.Enabled = True
+        '        Exit Sub
+
+        '    End If
+
+
+        '    Try
+        '        SerialPort1.Read(receiveByte, 0, 10)
+        '        dataIn1 = receiveByte(0)
+        '        dataIn2 = receiveByte(1)
+        '        dataIn3 = receiveByte(2)
+        '        dataIn4 = receiveByte(3)
+        '        InTermListBox.Items.Add(Chr(dataIn1) & vbTab & Chr(dataIn2) & vbTab & Chr(dataIn3) & vbTab & Chr(dataIn4))
+        '    Catch ex As Exception
+
+        '    End Try
+
+        'Else
+        '    MsgBox("Please configure and open serial port to procede")
+        '    TextBox1.Text = " "
+        'End If
         Timer1.Enabled = True
+
+
 
     End Sub
 
@@ -171,12 +226,15 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            QyRecLabel.Text = (Asc(inPut1))
-            Label1.Text = (Chr(inPut1))
-            Label2.Text = inPut1
+            'QyRecLabel.Text = (Asc(inPut1))
+            'Label1.Text = (Chr(inPut1))
+            'Label2.Text = inPut1
 
 
         End If
+
+
+
 
 
 
@@ -186,9 +244,9 @@ Public Class Form1
         ' DataReceived(dataIn)
 
         'QyRecLabel.Text = (Asc(inPut1) & Asc(inPut2) & Asc(inPut3) & Asc(inPut4) & Asc(inPut5) & Asc(inPut6) & Asc(inPut7) & Asc(inPut8))
-        'QyRecLabel.Text = (Asc(inPut1))
-        'Label1.Text = (Chr(inPut1))
-        'Label2.Text = inPut1
+        QyRecLabel.Text = (Asc(inPut1))
+        Label1.Text = (Chr(inPut1))
+        Label2.Text = inPut1
 
     End Sub
 
@@ -230,78 +288,78 @@ Public Class Form1
 
 
     'Up dated routine to send all characters in list box
-    Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        Timer1.Enabled = False                                  'Stop Timer
-        'Dim dataOut As String                                   'Transmit Variables
-        'Dim dataIn1, dataIn2, dataIn3, dataIn4 As Integer
-        'Dim input As String
-        Dim dataLen, TXCount As Integer
-        dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
+    'Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
+    '    Timer1.Enabled = False                                  'Stop Timer
+    '    'Dim dataOut As String                                   'Transmit Variables
+    '    'Dim dataIn1, dataIn2, dataIn3, dataIn4 As Integer
+    '    'Dim input As String
+    '    Dim dataLen, TXCount As Integer
+    '    dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
 
-        dataOut = TextBox1.Text
+    '    dataOut = TextBox1.Text
 
-        If portState = True Then
-            If TextBox1.Text IsNot "" Then                         'Test for null characters
-                Do Until TXCount = dataLen                          'Do once for each character
-                    If SerialPort1.BytesToWrite = 0 Then
-                        'grab Character x using the TXCount as an index pointer
-                        dataOut = TextBox1.Text.ElementAt(TXCount)
-                        SerialPort1.Write(dataOut)     'Sends Character x out
-                        TXCount += 1                   'Increment loop count info
-                    End If
-                Loop
-                TransmitCount += dataLen                'Save total bytes send info
-                OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
-            Else
-                Timer1.Enabled = True  'restart timer
-                Exit Sub
+    '    If portState = True Then
+    '        If TextBox1.Text IsNot "" Then                         'Test for null characters
+    '            Do Until TXCount = dataLen                          'Do once for each character
+    '                If SerialPort1.BytesToWrite = 0 Then
+    '                    'grab Character x using the TXCount as an index pointer
+    '                    dataOut = TextBox1.Text.ElementAt(TXCount)
+    '                    SerialPort1.Write(dataOut)     'Sends Character x out
+    '                    TXCount += 1                   'Increment loop count info
+    '                End If
+    '            Loop
+    '            TransmitCount += dataLen                'Save total bytes send info
+    '            OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+    '        Else
+    '            Timer1.Enabled = True  'restart timer
+    '            Exit Sub
 
-            End If
+    '        End If
 
-        Else
-            MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
-            'TextBox1.Text = " "
-        End If
-        Timer1.Enabled = True
+    '    Else
+    '        MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
+    '        'TextBox1.Text = " "
+    '    End If
+    '    Timer1.Enabled = True
 
 
 
-        ' input = TextBox1.Text                                   'Load transmit variable with information from text box
-        'dataOut = Regex.Replace(input, "\s", "")                'Removes all spaces from input
+    '    ' input = TextBox1.Text                                   'Load transmit variable with information from text box
+    '    'dataOut = Regex.Replace(input, "\s", "")                'Removes all spaces from input
 
-        'If portState = True Then                                'Test if port is open
-        '    SerialPort1.DiscardInBuffer()                       'Clears transmit buffer
+    '    'If portState = True Then                                'Test if port is open
+    '    '    SerialPort1.DiscardInBuffer()                       'Clears transmit buffer
 
-        '    If dataOut IsNot "" Then                            'Test transmit value is not blank
-        '            SerialPort1.Write(dataOut, 0, 4)                'Send data
-        '            OutTermListBox.Items.Add(dataOut)               'Log sent data
+    '    '    If dataOut IsNot "" Then                            'Test transmit value is not blank
+    '    '            SerialPort1.Write(dataOut, 0, 4)                'Send data
+    '    '            OutTermListBox.Items.Add(dataOut)               'Log sent data
 
-        '        Else                                                 'Send data was blank
-        '            Timer1.Enabled = True                            'Restart timer
-        '            Exit Sub                                         'Leave
+    '    '        Else                                                 'Send data was blank
+    '    '            Timer1.Enabled = True                            'Restart timer
+    '    '            Exit Sub                                         'Leave
 
-        '        End If
+    '    '        End If
 
-        '        Try                                                  'Attempt to receive
-        '            System.Threading.Thread.Sleep(20)                'Time delay to ensure correct data is read
-        '            SerialPort1.Read(receiveByte, 0, 10)             'Read Serial Port
-        '            dataIn1 = receiveByte(0)                         'Save Byte0
-        '            dataIn2 = receiveByte(1)                         'Save Byte1
-        '            dataIn3 = receiveByte(2)                         'Save Byte2
-        '            dataIn4 = receiveByte(3)                         'Save Byte3
-        '            'Add data to input list box as ascii characters
-        '            InTermListBox.Items.Add(Chr(dataIn1) & vbTab & Chr(dataIn2) & vbTab & Chr(dataIn3) & vbTab & Chr(dataIn4))
-        '        Catch ex As Exception
+    '    '        Try                                                  'Attempt to receive
+    '    '            System.Threading.Thread.Sleep(20)                'Time delay to ensure correct data is read
+    '    '            SerialPort1.Read(receiveByte, 0, 10)             'Read Serial Port
+    '    '            dataIn1 = receiveByte(0)                         'Save Byte0
+    '    '            dataIn2 = receiveByte(1)                         'Save Byte1
+    '    '            dataIn3 = receiveByte(2)                         'Save Byte2
+    '    '            dataIn4 = receiveByte(3)                         'Save Byte3
+    '    '            'Add data to input list box as ascii characters
+    '    '            InTermListBox.Items.Add(Chr(dataIn1) & vbTab & Chr(dataIn2) & vbTab & Chr(dataIn3) & vbTab & Chr(dataIn4))
+    '    '        Catch ex As Exception
 
-        '        End Try
+    '    '        End Try
 
-        '    Else
-        '        MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
-        '        TextBox1.Text = " "
-        '    End If
-        '    Timer1.Enabled = True                                       'Restart Timer
+    '    '    Else
+    '    '        MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
+    '    '        TextBox1.Text = " "
+    '    '    End If
+    '    '    Timer1.Enabled = True                                       'Restart Timer
 
-    End Sub
+    'End Sub
 
     'Added 10.5 
 
@@ -309,7 +367,7 @@ Public Class Form1
     Private Sub DataReceived(sender As Object, e As EventArgs) Handles SerialPort1.DataReceived
         'readSize = SerialPort1.BytesToRead
         'Throw New NotImplementedException
-
+        Dim qyin As String
 
         receiveCount += 1                                           'increment recieve byte counter
         SerialPort1.Read(receiveByte, 0, 4)                         'read serial buffer value
@@ -338,6 +396,9 @@ Public Class Form1
 
         End Select
         newData += 1                                                    'Increment newData once loop is complete
+
+        qyin = dataIn1
+
     End Sub
 
 

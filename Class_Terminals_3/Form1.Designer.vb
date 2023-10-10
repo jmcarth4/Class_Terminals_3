@@ -40,13 +40,15 @@ Partial Class Form1
         Me.BaudRateButton = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
-        Me.QySendButton = New System.Windows.Forms.Button()
-        Me.QyRecButton = New System.Windows.Forms.Button()
+        Me.AnalogReadButton = New System.Windows.Forms.Button()
+        Me.WriteAnalogButton = New System.Windows.Forms.Button()
         Me.QyRecLabel = New System.Windows.Forms.Label()
         Me.QyDisplayLabel = New System.Windows.Forms.Label()
         Me.QySendTextBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.RDigitalButton = New System.Windows.Forms.Button()
+        Me.WDigitalButton = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'DataInputLabel
@@ -62,16 +64,16 @@ Partial Class Form1
         '
         Me.InTermListBox.FormattingEnabled = True
         Me.InTermListBox.ItemHeight = 20
-        Me.InTermListBox.Location = New System.Drawing.Point(780, 217)
+        Me.InTermListBox.Location = New System.Drawing.Point(863, 191)
         Me.InTermListBox.Name = "InTermListBox"
-        Me.InTermListBox.Size = New System.Drawing.Size(325, 244)
+        Me.InTermListBox.Size = New System.Drawing.Size(207, 184)
         Me.InTermListBox.TabIndex = 62
         '
         'OutTermListBox
         '
         Me.OutTermListBox.FormattingEnabled = True
         Me.OutTermListBox.ItemHeight = 20
-        Me.OutTermListBox.Location = New System.Drawing.Point(548, 217)
+        Me.OutTermListBox.Location = New System.Drawing.Point(620, 203)
         Me.OutTermListBox.Name = "OutTermListBox"
         Me.OutTermListBox.Size = New System.Drawing.Size(226, 244)
         Me.OutTermListBox.TabIndex = 61
@@ -87,7 +89,7 @@ Partial Class Form1
         '
         'OutClearButton
         '
-        Me.OutClearButton.Location = New System.Drawing.Point(569, 471)
+        Me.OutClearButton.Location = New System.Drawing.Point(676, 453)
         Me.OutClearButton.Name = "OutClearButton"
         Me.OutClearButton.Size = New System.Drawing.Size(154, 104)
         Me.OutClearButton.TabIndex = 59
@@ -96,7 +98,7 @@ Partial Class Form1
         '
         'InClearButton
         '
-        Me.InClearButton.Location = New System.Drawing.Point(833, 467)
+        Me.InClearButton.Location = New System.Drawing.Point(901, 401)
         Me.InClearButton.Name = "InClearButton"
         Me.InClearButton.Size = New System.Drawing.Size(154, 104)
         Me.InClearButton.TabIndex = 58
@@ -112,7 +114,7 @@ Partial Class Form1
         '
         'SendButton
         '
-        Me.SendButton.Location = New System.Drawing.Point(642, 93)
+        Me.SendButton.Location = New System.Drawing.Point(603, 87)
         Me.SendButton.Name = "SendButton"
         Me.SendButton.Size = New System.Drawing.Size(154, 104)
         Me.SendButton.TabIndex = 56
@@ -190,28 +192,28 @@ Partial Class Form1
         'SerialPort1
         '
         '
-        'QySendButton
+        'AnalogReadButton
         '
-        Me.QySendButton.Location = New System.Drawing.Point(33, 428)
-        Me.QySendButton.Name = "QySendButton"
-        Me.QySendButton.Size = New System.Drawing.Size(93, 62)
-        Me.QySendButton.TabIndex = 64
-        Me.QySendButton.Text = "Send to Qy2 Board"
-        Me.QySendButton.UseVisualStyleBackColor = True
+        Me.AnalogReadButton.Location = New System.Drawing.Point(17, 394)
+        Me.AnalogReadButton.Name = "AnalogReadButton"
+        Me.AnalogReadButton.Size = New System.Drawing.Size(109, 96)
+        Me.AnalogReadButton.TabIndex = 64
+        Me.AnalogReadButton.Text = "ReadAnalog"
+        Me.AnalogReadButton.UseVisualStyleBackColor = True
         '
-        'QyRecButton
+        'WriteAnalogButton
         '
-        Me.QyRecButton.Location = New System.Drawing.Point(188, 428)
-        Me.QyRecButton.Name = "QyRecButton"
-        Me.QyRecButton.Size = New System.Drawing.Size(95, 53)
-        Me.QyRecButton.TabIndex = 65
-        Me.QyRecButton.Text = "Clear Qy@ board Rec"
-        Me.QyRecButton.UseVisualStyleBackColor = True
+        Me.WriteAnalogButton.Location = New System.Drawing.Point(179, 394)
+        Me.WriteAnalogButton.Name = "WriteAnalogButton"
+        Me.WriteAnalogButton.Size = New System.Drawing.Size(104, 87)
+        Me.WriteAnalogButton.TabIndex = 65
+        Me.WriteAnalogButton.Text = "Write Analog"
+        Me.WriteAnalogButton.UseVisualStyleBackColor = True
         '
         'QyRecLabel
         '
         Me.QyRecLabel.AutoSize = True
-        Me.QyRecLabel.Location = New System.Drawing.Point(230, 525)
+        Me.QyRecLabel.Location = New System.Drawing.Point(240, 515)
         Me.QyRecLabel.Name = "QyRecLabel"
         Me.QyRecLabel.Size = New System.Drawing.Size(18, 20)
         Me.QyRecLabel.TabIndex = 66
@@ -228,7 +230,7 @@ Partial Class Form1
         '
         'QySendTextBox
         '
-        Me.QySendTextBox.Location = New System.Drawing.Point(33, 519)
+        Me.QySendTextBox.Location = New System.Drawing.Point(507, 546)
         Me.QySendTextBox.Name = "QySendTextBox"
         Me.QySendTextBox.Size = New System.Drawing.Size(100, 26)
         Me.QySendTextBox.TabIndex = 68
@@ -236,7 +238,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(230, 555)
+        Me.Label1.Location = New System.Drawing.Point(240, 549)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(18, 20)
         Me.Label1.TabIndex = 69
@@ -245,24 +247,44 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(416, 560)
+        Me.Label2.Location = New System.Drawing.Point(404, 549)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(18, 20)
         Me.Label2.TabIndex = 70
         Me.Label2.Text = "0"
+        '
+        'RDigitalButton
+        '
+        Me.RDigitalButton.Location = New System.Drawing.Point(323, 394)
+        Me.RDigitalButton.Name = "RDigitalButton"
+        Me.RDigitalButton.Size = New System.Drawing.Size(111, 77)
+        Me.RDigitalButton.TabIndex = 71
+        Me.RDigitalButton.Text = "Read Digital"
+        Me.RDigitalButton.UseVisualStyleBackColor = True
+        '
+        'WDigitalButton
+        '
+        Me.WDigitalButton.Location = New System.Drawing.Point(456, 401)
+        Me.WDigitalButton.Name = "WDigitalButton"
+        Me.WDigitalButton.Size = New System.Drawing.Size(116, 62)
+        Me.WDigitalButton.TabIndex = 72
+        Me.WDigitalButton.Text = "Wrtie Digital"
+        Me.WDigitalButton.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1247, 646)
+        Me.Controls.Add(Me.WDigitalButton)
+        Me.Controls.Add(Me.RDigitalButton)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.QySendTextBox)
         Me.Controls.Add(Me.QyDisplayLabel)
         Me.Controls.Add(Me.QyRecLabel)
-        Me.Controls.Add(Me.QyRecButton)
-        Me.Controls.Add(Me.QySendButton)
+        Me.Controls.Add(Me.WriteAnalogButton)
+        Me.Controls.Add(Me.AnalogReadButton)
         Me.Controls.Add(Me.DataInputLabel)
         Me.Controls.Add(Me.InTermListBox)
         Me.Controls.Add(Me.OutTermListBox)
@@ -302,11 +324,13 @@ Partial Class Form1
     Friend WithEvents BaudRateButton As Button
     Friend WithEvents Timer1 As Timer
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
-    Friend WithEvents QySendButton As Button
-    Friend WithEvents QyRecButton As Button
+    Friend WithEvents AnalogReadButton As Button
+    Friend WithEvents WriteAnalogButton As Button
     Friend WithEvents QyRecLabel As Label
     Friend WithEvents QyDisplayLabel As Label
     Friend WithEvents QySendTextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents RDigitalButton As Button
+    Friend WithEvents WDigitalButton As Button
 End Class
