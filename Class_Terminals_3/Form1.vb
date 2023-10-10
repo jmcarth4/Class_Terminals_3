@@ -67,6 +67,49 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub QyRecButton_Click(sender As Object, e As EventArgs) Handles QyRecButton.Click
+        QyRecLabel.Text = ""
+        Label1.Text = " "
+    End Sub
+
+    Private Sub QySendButton_Click(sender As Object, e As EventArgs) Handles QySendButton.Click
+
+        Timer1.Enabled = False                                  'Stop Timer
+
+        Dim dataLen, TXCount As Integer
+
+        Dim sendByte As Byte
+        dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
+        sendByte = CByte(51)
+        ' dataOut = sendByte
+
+        If portState = True Then
+            If TextBox1.Text IsNot "" Then                         'Test for null characters
+                Do Until TXCount = dataLen                          'Do once for each character
+                    If SerialPort1.BytesToWrite = 0 Then
+                        'grab Character x using the TXCount as an index pointer
+                        'dataOut = TextBox1.Text.ElementAt(TXCount)
+                        dataOut = sendByte
+                        SerialPort1.Write(dataOut)     'Sends Character x out
+                        TXCount += 1                   'Increment loop count info
+                    End If
+                Loop
+                TransmitCount += dataLen                'Save total bytes send info
+                OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+            Else
+                Timer1.Enabled = True  'restart timer
+                Exit Sub
+
+            End If
+
+        Else
+            MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
+            'TextBox1.Text = " "
+        End If
+        Timer1.Enabled = True
+
+    End Sub
+
 
 
     'Displays serial port data in a list box
@@ -128,14 +171,24 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
+            QyRecLabel.Text = (Asc(inPut1))
+            Label1.Text = (Chr(inPut1))
+            Label2.Text = inPut1
+
+
         End If
 
 
 
         'Receive from Qy2 board
         '????????????????????????
-        'QyRecLabel.Text = DataReceived()
 
+        ' DataReceived(dataIn)
+
+        'QyRecLabel.Text = (Asc(inPut1) & Asc(inPut2) & Asc(inPut3) & Asc(inPut4) & Asc(inPut5) & Asc(inPut6) & Asc(inPut7) & Asc(inPut8))
+        'QyRecLabel.Text = (Asc(inPut1))
+        'Label1.Text = (Chr(inPut1))
+        'Label2.Text = inPut1
 
     End Sub
 
@@ -251,14 +304,13 @@ Public Class Form1
     End Sub
 
     'Added 10.5 
-    'Recieving data
-    'Crashes program----??????
-    '?????????????????????????????????????????
-
 
     'Asynchronous Serial receive subroutine triggered by serial receive event
     Private Sub DataReceived(sender As Object, e As EventArgs) Handles SerialPort1.DataReceived
         'readSize = SerialPort1.BytesToRead
+        'Throw New NotImplementedException
+
+
         receiveCount += 1                                           'increment recieve byte counter
         SerialPort1.Read(receiveByte, 0, 4)                         'read serial buffer value
 
@@ -313,9 +365,7 @@ Public Class Form1
         Me.Close()
     End Sub
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles BaudRateListBox.SelectedIndexChanged
 
-    End Sub
 End Class
 
 

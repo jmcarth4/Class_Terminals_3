@@ -45,6 +45,8 @@ Partial Class Form1
         Me.QyRecLabel = New System.Windows.Forms.Label()
         Me.QyDisplayLabel = New System.Windows.Forms.Label()
         Me.QySendTextBox = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'DataInputLabel
@@ -69,7 +71,7 @@ Partial Class Form1
         '
         Me.OutTermListBox.FormattingEnabled = True
         Me.OutTermListBox.ItemHeight = 20
-        Me.OutTermListBox.Location = New System.Drawing.Point(531, 217)
+        Me.OutTermListBox.Location = New System.Drawing.Point(548, 217)
         Me.OutTermListBox.Name = "OutTermListBox"
         Me.OutTermListBox.Size = New System.Drawing.Size(226, 244)
         Me.OutTermListBox.TabIndex = 61
@@ -203,7 +205,7 @@ Partial Class Form1
         Me.QyRecButton.Name = "QyRecButton"
         Me.QyRecButton.Size = New System.Drawing.Size(95, 53)
         Me.QyRecButton.TabIndex = 65
-        Me.QyRecButton.Text = "Receive from Qy@ board"
+        Me.QyRecButton.Text = "Clear Qy@ board Rec"
         Me.QyRecButton.UseVisualStyleBackColor = True
         '
         'QyRecLabel
@@ -231,11 +233,31 @@ Partial Class Form1
         Me.QySendTextBox.Size = New System.Drawing.Size(100, 26)
         Me.QySendTextBox.TabIndex = 68
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(230, 555)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(18, 20)
+        Me.Label1.TabIndex = 69
+        Me.Label1.Text = "0"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(416, 560)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(18, 20)
+        Me.Label2.TabIndex = 70
+        Me.Label2.Text = "0"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1247, 646)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.QySendTextBox)
         Me.Controls.Add(Me.QyDisplayLabel)
         Me.Controls.Add(Me.QyRecLabel)
@@ -285,4 +307,6 @@ Partial Class Form1
     Friend WithEvents QyRecLabel As Label
     Friend WithEvents QyDisplayLabel As Label
     Friend WithEvents QySendTextBox As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
 End Class
